@@ -1,9 +1,9 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-const galleryEl = document.querySelector('.gallery');
+const galleryEl = document.querySelector(".gallery");
 
-const createGallery = galleryItems.map((item) => {
+galleryItems.map((item) => {
   const galleryItem = `<div class="gallery__item">
     <a class="gallery__link" href=${item.original}>
       <img
@@ -14,16 +14,16 @@ const createGallery = galleryItems.map((item) => {
       />
     </a>
   </div>`;
-  galleryEl.insertAdjacentHTML('afterbegin', galleryItem);
+  galleryEl.insertAdjacentHTML("afterbegin", galleryItem);
 });
 
 const getUrl = (event) => {
   event.preventDefault();
-  if (event.target.nodeName !== 'IMG') {
+  if (event.target.nodeName !== "IMG") {
     return;
   }
   const bigImgUrl = event.target.dataset;
   console.log(bigImgUrl);
 };
 
-galleryEl.addEventListener('click', getUrl);
+galleryEl.addEventListener("click", getUrl);
