@@ -1,7 +1,7 @@
-import { galleryItems } from "./gallery-items.js";
+import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-const galleryEl = document.querySelector(".gallery");
+const galleryEl = document.querySelector('.gallery');
 
 galleryItems.map((item) => {
   const galleryItem = `<div class="gallery__item">
@@ -14,16 +14,37 @@ galleryItems.map((item) => {
       />
     </a>
   </div>`;
-  galleryEl.insertAdjacentHTML("afterbegin", galleryItem);
+  galleryEl.insertAdjacentHTML('afterbegin', galleryItem);
 });
 
 const getUrl = (event) => {
   event.preventDefault();
-  if (event.target.nodeName !== "IMG") {
+  if (event.target.nodeName !== 'IMG') {
     return;
   }
-  const bigImgUrl = event.target.dataset;
-  console.log(bigImgUrl);
+  const bigImgUrl = event.target.dataset.source;
+
+  createModalWindow(bigImgUrl);
 };
 
-galleryEl.addEventListener("click", getUrl);
+const createModalWindow = (bigImgUrl) => {
+  const closeModalWindow = (event) => {
+    if (event.code === 'Escape') {
+      instance.close();
+    }
+  };
+  const instance = basicLightbox.create(
+    `<img src=${bigImgUrl} width="800" height="600"/>`,
+    {
+      onShow: () => {
+        window.addEventListener('keydown', closeModalWindow);
+      },
+      onClose: () => {
+        window.removeEventListener('keydown', closeModalWindow);
+      },
+    }
+  );
+  instance.show();
+};
+
+galleryEl.addEventListener('click', getUrl);
